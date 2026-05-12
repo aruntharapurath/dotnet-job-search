@@ -81,18 +81,17 @@ JSEARCH_QUERIES_INDIA = [
     (".NET Core microservices GCC India", "IN"),
 ]
 
+# European + Canadian companies hiring .NET engineers remotely from India
 JSEARCH_QUERIES_REMOTE = [
-    ("Senior .NET Core Engineer remote India", ""),
-    ("Senior .NET Engineer remote Europe", ""),
-    (".NET Core microservices remote Europe", ""),
-    ("Senior C# .NET remote Europe", ""),
-    ("Senior .NET Engineer remote Canada", "CA"),
-    (".NET Core Azure remote", "GB"),
-    ("Senior .NET Core Engineer remote", "DE"),
-    ("Senior .NET Engineer remote", "NL"),
-    (".NET microservices remote", "FR"),
-    ("Senior .NET Core Engineer remote", "SE"),
-    (".NET Azure microservices remote", "PL"),
+    ("Senior .NET Core Engineer remote India", "GB"),
+    ("Senior .NET Core Engineer remote India", "DE"),
+    ("Senior .NET Engineer remote India", "NL"),
+    (".NET Core microservices remote India", "FR"),
+    ("Senior C# .NET remote India", "SE"),
+    (".NET Azure microservices remote India", "PL"),
+    ("Senior .NET Engineer remote India", "CA"),
+    (".NET Core Engineer remote work from India", ""),
+    ("Senior .NET Core Engineer India remote Europe", ""),
 ]
 
 def jsearch_fetch(query: str, country: str) -> list:
@@ -159,19 +158,20 @@ ADZUNA_INDIA_SEARCHES = [
     ("in", "dotnet microservices GCC India"),
 ]
 
-# Europe country codes: gb=UK, de=Germany, nl=Netherlands, fr=France,
-# se=Sweden, pl=Poland, at=Austria, be=Belgium, ch=Switzerland
+# European companies hiring .NET engineers remotely from India
+# Adzuna country codes: gb=UK, de=Germany, nl=Netherlands, fr=France,
+# se=Sweden, pl=Poland, at=Austria, ca=Canada
 ADZUNA_REMOTE_SEARCHES = [
-    ("gb", "senior dotnet core remote"),
-    ("gb", "senior c# microservices remote"),
-    ("de", "senior dotnet engineer remote"),
-    ("nl", "dotnet core azure remote"),
-    ("fr", "senior dotnet engineer remote"),
-    ("se", "senior dotnet core remote"),
-    ("pl", "dotnet core microservices remote"),
-    ("at", "senior dotnet engineer remote"),
-    ("ca", "senior dotnet engineer remote"),
-    ("ca", "dotnet core azure remote"),
+    ("gb", "senior dotnet core remote india"),
+    ("gb", "senior c# microservices remote india"),
+    ("de", "senior dotnet engineer remote india"),
+    ("de", "dotnet core azure remote india"),
+    ("nl", "senior dotnet core remote india"),
+    ("fr", "senior dotnet engineer remote india"),
+    ("se", "senior dotnet core remote india"),
+    ("pl", "dotnet core microservices remote india"),
+    ("at", "senior dotnet engineer remote india"),
+    ("ca", "senior dotnet engineer remote india"),
 ]
 
 def adzuna_fetch(country: str, query: str) -> list:
@@ -400,7 +400,7 @@ def build_email_html(india_top, india_all, remote_top, remote_all):
       {jobs_table_html(india_top, "No high-scoring India roles today — check the attached CSV.")}
 
       <h2 style="color:#1a7a1a;border-bottom:2px solid #1a7a1a;padding-bottom:6px">
-        🌍 Remote — EU &amp; Canada Product Companies
+        🌍 European &amp; Canadian Companies — Remote from India
         <span style="font-size:13px;font-weight:normal;color:#666">
           ({len(remote_top)} high-fit / {len(remote_all)} new today)
         </span>
@@ -473,7 +473,7 @@ def main():
     india_scored  = score_jobs_with_claude(india_new,  "India GCC / product company")
 
     print("🤖 Scoring Remote jobs with Claude…")
-    remote_scored = score_jobs_with_claude(remote_new, "EU / Canada remote product company")
+    remote_scored = score_jobs_with_claude(remote_new, "European or Canadian product company hiring remotely from India")
 
     india_top  = [j for j in india_scored  if j.get("score", 0) >= MIN_SCORE]
     remote_top = [j for j in remote_scored if j.get("score", 0) >= MIN_SCORE]
